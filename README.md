@@ -1,7 +1,5 @@
 # c5.17_hackathon
 
-# C2.17_tictactoe
-
 ### REQUIREMENTS
 - Must have at least 2 players
 - Basic <a href="http://radagast.se/othello/Help/strategy.html" target="_blank">Othello game rules</a>
