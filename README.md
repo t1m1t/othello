@@ -22,10 +22,11 @@
 - Other team members clone the repo from the project lead's fork
 
 ### Teams
+
 ## Team 1
-sunoo
-insoo
-elias
+- sunoo
+- insoo
+- elias
 
 ## Team 2
 - alphonse
