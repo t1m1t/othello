@@ -28,38 +28,38 @@ insoo
 elias
 
 ## Team 2
-alphonse
-dennis
-adam
+- alphonse
+- dennis
+- adam
 
 ## Team 3
-matt
-kelsey
-howard
+- matt
+- kelsey
+- howard
 
 ## Team 4
-khanh
-jonathan
-kieran
+- khanh
+- jonathan
+- kieran
 
 ## Team 5
-tim
-jay
-brian
+- tim
+- jay
+- brian
 
 #### special teams have 6 hours to create the project
 
 ## Special Team 1
-Scott
-Andy
-Tim
-Scott
+- Scott
+- Andy
+- Tim
+- Scott
 
 ## Special Team 2
-Donald
-Brian
-Kevin
-Andres
+- Donald
+- Brian
+- Kevin
+- Andres
 
 ### Requirement for submission
 - Live copy link to gh-pages: 
