@@ -111,7 +111,7 @@ body{
 #reset-button{
     margin-top: 20px;
 }
-.button{
+.reset{
     width: 200px;
     height: 50px;
     border-radius: 30px;
@@ -121,7 +121,7 @@ body{
     background-color: black;
     display: inline;
 }
-.button:hover {
+.reset:hover {
     background-color: ghostwhite;
     color: black;
     text-shadow:
