@@ -11,12 +11,12 @@ function createObj(){
 
 function generateSpots(){
     for (var i = 1; i < 9; i++) { //loop to create rows for board
-        $("<div>").attr("id","row"+i).addClass("rows").appendTo("#back-board");
+        $("<div>").attr("id", "row" + i).addClass("rows").appendTo("#back-board");
     }
     for(var k = 1; k < 9; k++){
-        for(var j=0; j<8; j++){ //loop to create columns for board
-            var tempDiv = $("<div>").attr("col",col_list[j]).attr("row",k).appendTo("#row"+k);
-            array_list[k-1].push(tempDiv);
+        for(var j = 0; j < 8; j++){ //loop to create columns for board
+            var tempDiv = $("<div>").attr("col", col_list[j]).attr("row", k).appendTo("#row" + k);
+            array_list[k - 1].push(tempDiv);
         }
     }
 }
@@ -56,7 +56,7 @@ function Game() {
     this.legalMoves = function (index) {    //legal moves function
         var colNum;
         var rowNum;
-        for(var i=0; i<this.legal_moves_array.length; i++){
+        for(var i = 0; i < this.legal_moves_array.length; i++){
             this.legal_moves_array[i].removeClass("allowedSpot");  //removes class-illegal moves cant be used
         }
         this.legal_moves_array = [];
