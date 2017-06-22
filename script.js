@@ -108,6 +108,16 @@ function Game() {
         for(var i = 0; i < self.legal_moves_array.length; i++){
             self.legal_moves_array[i].addClass("allowedSpot");
         }
+        if(self.legal_moves_array.length === 0 && (self.player1.length + self.player2.length < 64)){
+            if(self.turn === self.player_list[1]){
+                self.turn = self.player_list[0];
+                self.legalMoves(0);
+            }
+            else{
+                self.turn = self.player_list[1];
+                self.legalMoves(1);
+            }
+        }
     };
 
     this.searchSpots = function (selectDiv, disc_color, this_color) {   //searchSpots function
@@ -150,17 +160,6 @@ function Game() {
         var x = $(this).attr("col");
         var y = parseInt($(this).attr("row"));
         var indexofcol = col_list.indexOf(x);
-        if(self.legal_moves_array.length === 0 && (self.player1.length + self.player2.length < 64)){
-            if(self.turn === self.player_list[1]){
-                self.turn = self.player_list[0];
-                self.legalMoves(0);
-            }
-            else{
-                self.turn = self.player_list[1];
-                self.legalMoves(1);
-            }
-            return;
-        }
         for (var i = 0; i < self.legal_moves_array.length; i++) {
             if (self.legal_moves_array[i].attr("row") == y && self.legal_moves_array[i].attr("col") == x) {
                 bool = true;
@@ -273,10 +272,15 @@ function Game() {
         this.resetAll();
         if(this.player1.length > this.player2.length){
             alert("SITH WINS");
+            this.turn = self.player_list[0];
+            this.symbolAppear();
         }
         else{
             alert("JEDI WINS");
+            this.turn = self.player_list[1];
+            this.symbolAppear();
         }
+
     };
 
     this.displayDiscs = function(){    //display function
