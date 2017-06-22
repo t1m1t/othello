@@ -78,7 +78,7 @@ function Game() {
                             for (var b = 0; b < this.player1.length; b++) {
                                 // this.horizontal(b, selectDiv, this.player1, "white-disc");
                                 // this.vertical(b, selectDiv, this.player1, "white-disc");
-                                this.diagonal(b, selectDiv, this.player1, "white-disc", "black-disc");
+                                this.searchSpots(selectDiv, "white-disc", "black-disc");
                             }
                         }
                     }
@@ -99,11 +99,7 @@ function Game() {
                             continue;
                         }
                         else {
-                            for (var w = 0; w < this.player2.length; w++) {
-                                // this.horizontal(w, selectDiv, this.player2, "black-disc");
-                                // this.vertical(w, selectDiv, this.player2, "black-disc");
-                                this.diagonal(w, selectDiv, this.player2, "black-disc","white-disc");
-                            }
+                            this.searchSpots(selectDiv, "black-disc", "white-disc");
                         }
                     }
                 }
@@ -114,66 +110,7 @@ function Game() {
         }
     };
 
-    // this.horizontal = function (playerIndex, selectDiv, playerArray, disc_color) {  //horizontal function
-    //     var horiz = [[-1,0],[1,0]];
-    //
-    //
-    //     //
-    //     if (playerArray[playerIndex].attr("row") === selectDiv.attr("row")) {
-    //         var r = parseInt(selectDiv.attr("row"));
-    //         var c = col_list.indexOf(playerArray[playerIndex].attr("col"));
-    //         if (col_list.indexOf(selectDiv.attr("col")) < c) {
-    //             c = col_list.indexOf(selectDiv.attr("col"));
-    //         }
-    //         var col_diff = Math.abs(col_list.indexOf(playerArray[playerIndex].attr("col")) - col_list.indexOf(selectDiv.attr("col")));
-    //         if (col_diff > 1) {
-    //             for (var t = 1; t < col_diff; t++) {
-    //                 if (!array_list[selectDiv.attr("row")][c + t].hasClass(disc_color)) {
-    //                     break;
-    //                 }
-    //                 else if (array_list[r][c + t].hasClass(disc_color) && t === (col_diff - 1)) {
-    //                     this.legal_moves_array.push(selectDiv);
-    //                     // console.log("playerIndex: ",playerIndex);
-    //                     // console.log("playerArray: ",playerArray);
-    //                     // console.log("disc_color: ", disc_color);
-    //                     console.log("horizontal - selectDiv: " ,selectDiv);
-    //                     console.log("horizontal - playarr: " , playerArray[playerIndex])
-    //                     console.log("horizontal - selectdiv: " ,  selectDiv)
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     //
-    // };
-    //
-    // this.vertical = function (playerIndex, selectDiv, playerArray, disc_color) {   //vertical function
-    //     var vert = [[0,1], [0,-1]];
-    //
-    //
-    //     //
-    //     if (playerArray[playerIndex].attr("col") === selectDiv.attr("col")) {
-    //         var r = selectDiv.attr("row");
-    //         var c = col_list.indexOf(selectDiv.attr("col"));
-    //         if (r > playerArray[playerIndex].attr("row")) {
-    //             r = playerArray[playerIndex].attr("row");
-    //         }
-    //         r = parseInt(r);
-    //         var row_diff = Math.abs(playerArray[playerIndex].attr("row") - selectDiv.attr("row"));
-    //         if (row_diff > 1) {
-    //             for (var t = 1; t < row_diff; t++) {
-    //                 if (!array_list[r + t][c].hasClass(disc_color)) {
-    //                     break;
-    //                 }
-    //                 else if (array_list[r + t][c].hasClass(disc_color) && (t === row_diff - 1)) {
-    //                     this.legal_moves_array.push(selectDiv);
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     //
-    // };
-
-    this.diagonal = function (playerIndex, selectDiv, playerArray, disc_color, this_color) {   //diagonal function
+    this.searchSpots = function (selectDiv, disc_color, this_color) {   //searchSpots function
         var r = parseInt(selectDiv.attr("row"));
         var c = col_list.indexOf(selectDiv.attr("col"));
         var diag = [[0,1], [0,-1],[-1,0],[1,0],[-1,-1],[1,-1],[-1,1],[1,1]];
@@ -260,16 +197,18 @@ function Game() {
         var arrayOfFlips = [];
         for(var j = 0; j < directions.length; j++){
             var path = [];
-            var temp_y = y + directions[j][1];
-            var temp_x = x + directions[j][0];
+            var d0 = directions[j][0];
+            var d1 = directions[j][1];
+            var temp_y = y + d1;
+            var temp_x = x + d0;
             if(temp_y >= 0 && temp_y < 8 && temp_x >= 0 && temp_x < 8){
                 var divTracker = array_list[temp_y] [temp_x] ;
                 if(divTracker.hasClass(color_to_replace)){
-                    temp_directions = directions.slice();
+                    temp_directions = [[-1,-1], [0,-1],[1,-1], [-1,0],[1,0], [-1,1],[0,1], [1,1]];
                     while(divTracker.hasClass(color_to_replace)){
                         path.push(divTracker);
-                        temp_directions[j][0] += directions[j][0];
-                        temp_directions[j][1] += directions[j][1];
+                        temp_directions[j][0] += d0;
+                        temp_directions[j][1] += d1;
                         if((y + temp_directions[j][1]) < 0 || (y + temp_directions[j][1]) > 7 || (x + temp_directions[j][0]) < 0 || (x + temp_directions[j][0]) > 7){
                             break;
                         }
@@ -297,6 +236,7 @@ function Game() {
             arrayOfFlips[i].removeClass("white-disc black-disc");
             arrayOfFlips[i].addClass(color);
         }
+        console.log("arrayOfFlips: ", arrayOfFlips);
     };
 
     var goodImg = $("#jedi-on");
