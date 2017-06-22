@@ -31,7 +31,7 @@ function Game() {
     this.turn = null;
     this.legal_moves_array = [];     //this is for legal moves
 
-    //functions down here
+    //functions down here!
 
     var goodImg = $("#jedi-on");
     var badImg = $("#sith-on");
