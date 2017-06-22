@@ -258,19 +258,30 @@ function Game() {
             //sith's turn
         }
     };
+
     this.gameOver = function(){     //gameover function
+        modal = $('#myModal');
+        modal2 = $('#myModal2');
+
         if(this.player1.length > this.player2.length){
-            alert("SITH WINS");
             this.turn = self.player_list[0];
             this.symbolAppear();
+            $('.modal').show();
+            $('.close').on("click",function(){
+                $('#myModal').css("display","none");
+            })
         }
         else{
-            alert("JEDI WINS");
             this.turn = self.player_list[1];
             this.symbolAppear();
+            $('.modal2').show();
+            $('.close').on("click",function(){
+                $('#myModal2').css("display","none");
+            })
         }
         this.resetAll();
     };
+
     this.displayDiscs = function(){    //display function
         $(".player1-value").html(this.player1.length);
         $(".player2-value").html(this.player2.length);
