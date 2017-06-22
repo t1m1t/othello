@@ -13,10 +13,10 @@ function generateSpots(){
     for (var i = 1; i < 9; i++) { //loop to create rows for board
         $("<div>").attr("id","row"+i).addClass("rows").appendTo("#back-board");
     }
-    for(var k = 1; k < 9; k++){
+    for(var k = 0; k < 8; k++){
         for(var j=0; j<8; j++){ //loop to create columns for board
-            var tempDiv = $("<div>").attr("col",col_list[j]).attr("row",k).appendTo("#row"+k);
-            array_list[k-1].push(tempDiv);
+            var tempDiv = $("<div>").attr("col",col_list[j]).attr("row",k).appendTo("#row"+(k+1));
+            array_list[k].push(tempDiv);
         }
     }
 }
@@ -64,7 +64,7 @@ function Game() {
         if (index === 0) {
             for (i = 0; i < this.player2.length; i++) {
                 colNum = col_list.indexOf(this.player2[i].attr("col"));
-                rowNum = this.player2[i].attr("row")-1;
+                rowNum = parseInt(this.player2[i].attr("row"));
                 for (var j = -1; j < 2; j++) {    // for rows
                     for (var k = -1; k < 2; k++) {    //for columns
                         if((rowNum + j) < 0 || (rowNum + j) > 7 || (colNum + k) < 0 || (colNum + k) > 7){
@@ -76,8 +76,8 @@ function Game() {
                         }
                         else {
                             for (var b = 0; b < this.player1.length; b++) {
-                                this.horizontal(b, selectDiv, this.player1, "white-disc");
-                                this.vertical(b, selectDiv, this.player1, "white-disc");
+                                // this.horizontal(b, selectDiv, this.player1, "white-disc");
+                                // this.vertical(b, selectDiv, this.player1, "white-disc");
                                 this.diagonal(b, selectDiv, this.player1, "white-disc", "black-disc");
                             }
                         }
@@ -88,7 +88,7 @@ function Game() {
         else { //for player 2 - white moves
             for (var i = 0; i < this.player1.length; i++) {
                 colNum = col_list.indexOf(this.player1[i].attr("col"));
-                rowNum = this.player1[i].attr("row") - 1;
+                rowNum = parseInt(this.player1[i].attr("row"));
                 for (var j = -1; j < 2; j++) {    // for rows
                     for (var k = -1; k < 2; k++) {    //for columns
                         if((rowNum + j) < 0 || (rowNum + j) > 7 || (colNum + k) < 0 || (colNum + k) > 7 ){
@@ -100,8 +100,8 @@ function Game() {
                         }
                         else {
                             for (var w = 0; w < this.player2.length; w++) {
-                                this.horizontal(w, selectDiv, this.player2, "black-disc");
-                                this.vertical(w, selectDiv, this.player2, "black-disc");
+                                // this.horizontal(w, selectDiv, this.player2, "black-disc");
+                                // this.vertical(w, selectDiv, this.player2, "black-disc");
                                 this.diagonal(w, selectDiv, this.player2, "black-disc","white-disc");
                             }
                         }
@@ -114,57 +114,70 @@ function Game() {
         }
     };
 
-    this.horizontal = function (playerIndex, selectDiv, playerArray, disc_color) {  //horizontal function
-        if (playerArray[playerIndex].attr("row") === selectDiv.attr("row")) {
-            var r = selectDiv.attr("row");
-            var c = col_list.indexOf(playerArray[playerIndex].attr("col"));
-            if (col_list.indexOf(selectDiv.attr("col")) < c) {
-                c = col_list.indexOf(selectDiv.attr("col"));
-            }
-            var col_diff = Math.abs(col_list.indexOf(playerArray[playerIndex].attr("col")) - col_list.indexOf(selectDiv.attr("col")));
-            if (col_diff > 1) {
-                for (var t = 1; t < col_diff; t++) {
-                    if (!array_list[selectDiv.attr("row") - 1][c + t].hasClass(disc_color)) {
-                        break;
-                    }
-                    else if (array_list[r - 1][c + t].hasClass(disc_color) && t === (col_diff - 1)) {
-                        this.legal_moves_array.push(selectDiv);
-                        console.log("playerIndex: ",playerIndex);
-                        console.log("playerArray: ",playerArray);
-                        console.log("disc_color: ", disc_color);
-                        console.log("horizontal: " ,selectDiv);
-                    }
-                }
-            }
-        }
-    };
-
-    this.vertical = function (playerIndex, selectDiv, playerArray, disc_color) {   //vertical function
-        if (playerArray[playerIndex].attr("col") === selectDiv.attr("col")) {
-            var r = selectDiv.attr("row") - 1;
-            var c = col_list.indexOf(selectDiv.attr("col"));
-            if (r > playerArray[playerIndex].attr("row") - 1) {
-                r = playerArray[playerIndex].attr("row") - 1;
-            }
-            var row_diff = Math.abs(playerArray[playerIndex].attr("row") - selectDiv.attr("row"));
-            if (row_diff > 1) {
-                for (var t = 1; t < row_diff; t++) {
-                    if (!array_list[r + t][c].hasClass(disc_color)) {
-                        break;
-                    }
-                    else if (array_list[r + t][c].hasClass(disc_color) && (t === row_diff - 1)) {
-                        this.legal_moves_array.push(selectDiv);
-                    }
-                }
-            }
-        }
-    };
+    // this.horizontal = function (playerIndex, selectDiv, playerArray, disc_color) {  //horizontal function
+    //     var horiz = [[-1,0],[1,0]];
+    //
+    //
+    //     //
+    //     if (playerArray[playerIndex].attr("row") === selectDiv.attr("row")) {
+    //         var r = parseInt(selectDiv.attr("row"));
+    //         var c = col_list.indexOf(playerArray[playerIndex].attr("col"));
+    //         if (col_list.indexOf(selectDiv.attr("col")) < c) {
+    //             c = col_list.indexOf(selectDiv.attr("col"));
+    //         }
+    //         var col_diff = Math.abs(col_list.indexOf(playerArray[playerIndex].attr("col")) - col_list.indexOf(selectDiv.attr("col")));
+    //         if (col_diff > 1) {
+    //             for (var t = 1; t < col_diff; t++) {
+    //                 if (!array_list[selectDiv.attr("row")][c + t].hasClass(disc_color)) {
+    //                     break;
+    //                 }
+    //                 else if (array_list[r][c + t].hasClass(disc_color) && t === (col_diff - 1)) {
+    //                     this.legal_moves_array.push(selectDiv);
+    //                     // console.log("playerIndex: ",playerIndex);
+    //                     // console.log("playerArray: ",playerArray);
+    //                     // console.log("disc_color: ", disc_color);
+    //                     console.log("horizontal - selectDiv: " ,selectDiv);
+    //                     console.log("horizontal - playarr: " , playerArray[playerIndex])
+    //                     console.log("horizontal - selectdiv: " ,  selectDiv)
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     //
+    // };
+    //
+    // this.vertical = function (playerIndex, selectDiv, playerArray, disc_color) {   //vertical function
+    //     var vert = [[0,1], [0,-1]];
+    //
+    //
+    //     //
+    //     if (playerArray[playerIndex].attr("col") === selectDiv.attr("col")) {
+    //         var r = selectDiv.attr("row");
+    //         var c = col_list.indexOf(selectDiv.attr("col"));
+    //         if (r > playerArray[playerIndex].attr("row")) {
+    //             r = playerArray[playerIndex].attr("row");
+    //         }
+    //         r = parseInt(r);
+    //         var row_diff = Math.abs(playerArray[playerIndex].attr("row") - selectDiv.attr("row"));
+    //         if (row_diff > 1) {
+    //             for (var t = 1; t < row_diff; t++) {
+    //                 if (!array_list[r + t][c].hasClass(disc_color)) {
+    //                     break;
+    //                 }
+    //                 else if (array_list[r + t][c].hasClass(disc_color) && (t === row_diff - 1)) {
+    //                     this.legal_moves_array.push(selectDiv);
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     //
+    // };
 
     this.diagonal = function (playerIndex, selectDiv, playerArray, disc_color, this_color) {   //diagonal function
-        var r = selectDiv.attr("row") - 1;
+        var r = parseInt(selectDiv.attr("row"));
         var c = col_list.indexOf(selectDiv.attr("col"));
-        var diag = [[-1,-1],[1,-1],[-1,1],[1,1]];
-        var temp_diag_directions = [[-1,-1],[1,-1],[-1,1],[1,1]];
+        var diag = [[0,1], [0,-1],[-1,0],[1,0],[-1,-1],[1,-1],[-1,1],[1,1]];
+        var temp_diag_directions = [[0,1], [0,-1],[-1,0],[1,0],[-1,-1],[1,-1],[-1,1],[1,1]];
         for(var i = 0; i < diag.length; i++){
             var var1 = diag[i][0];
             var var2 = diag[i][1];
@@ -173,7 +186,7 @@ function Game() {
             if(var3 >= 0 && var3 < 8 && var4 >= 0 && var4 < 8){
                 var check = array_list[diag[i][1] + r] [diag[i][0] + c];
                 if( typeof check !== undefined && check.hasClass(disc_color)){
-                    temp_diag_directions = [[-1,-1],[1,-1],[-1,1],[1,1]];
+                    temp_diag_directions = [[0,1], [0,-1],[-1,0],[1,0],[-1,-1],[1,-1],[-1,1],[1,1]];
                     //found adjacent opposite color
                     while(check.hasClass(disc_color)){
                         temp_diag_directions[i][0] += var1;
@@ -198,7 +211,7 @@ function Game() {
         //if(this) isn't in the array: don't do this function
         var bool = false;
         var x = $(this).attr("col");
-        var y = $(this).attr("row");
+        var y = parseInt($(this).attr("row"));
         var indexofcol = col_list.indexOf(x);
         if(self.legal_moves_array.length === 0 && (self.player1.length + self.player2.length < 64)){
             if(self.turn === self.player_list[1]){
@@ -221,13 +234,13 @@ function Game() {
             if (self.turn == self.player_list[0]) { // player 1's turn
                 $(this).addClass("black-disc");
                 self.player1.push($(this));
-                self.flip($(this), "black-disc", "white-disc",indexofcol, y - 1);
+                self.flip($(this), "black-disc", "white-disc",indexofcol, y);
                 self.turn = self.player_list[1];
                 self.legalMoves(1);
             }
             else {
                 $(this).addClass("white-disc");
-                self.flip($(this), "white-disc", "black-disc",indexofcol, y-1);
+                self.flip($(this), "white-disc", "black-disc",indexofcol, y);
                 self.player2.push($(this));
                 self.turn = self.player_list[0];
                 self.legalMoves(0);
@@ -263,6 +276,7 @@ function Game() {
                         divTracker = array_list[y + temp_directions[j][1]] [x + temp_directions[j][0]];
                         if(divTracker.hasClass(color)){
                             arrayOfFlips = arrayOfFlips.concat(path);
+                            break;
                         }
                     }
                 }
