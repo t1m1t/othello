@@ -10,11 +10,11 @@ function createObj(){
 }
 
 function generateSpots(){
-    for (var i = 1; i < 9; i++) {
+    for (var i = 1; i < 9; i++) { //loop to create rows for board
         $("<div>").attr("id","row"+i).addClass("rows").appendTo("#back-board");
     }
     for(var k = 1; k < 9; k++){
-        for(var j=0; j<8; j++){
+        for(var j=0; j<8; j++){ //loop to create columns for board
             var tempDiv = $("<div>").attr("col",col_list[j]).attr("row",k).appendTo("#row"+k);
             array_list[k-1].push(tempDiv);
         }
@@ -31,19 +31,19 @@ function Game() {
     this.turn = null;
     this.legal_moves_array = [];     //this is for legal moves
 
-
     //functions down here
 
     var goodImg = $("#jedi-on");
     var badImg = $("#sith-on");
 
     this.init = function () {
-        //positions 4,5 give them black/white discs
+        //start with player 1 (sith) ready
         $(badImg).removeClass("hiddenClass");
         console.log("jedi hide");
         $(goodImg).addClass("hiddenClass");
         console.log("sith's turn");
 
+        //positions 4,5 give them black/white discs
         this.player2.push(array_list[3][3].addClass('white-disc'));
         this.player1.push(array_list[3][4].addClass('black-disc'));
         this.player1.push(array_list[4][3].addClass('black-disc'));
@@ -53,13 +53,13 @@ function Game() {
         $(".rows > div").click(self.clickHandler);
     };
 
-    this.legalMoves = function (index) {
+    this.legalMoves = function (index) {    //legal moves function
         var colNum;
         var rowNum;
         for(var i=0; i<this.legal_moves_array.length; i++){
-            this.legal_moves_array[i].removeClass("allowedSpot");
+            this.legal_moves_array[i].removeClass("allowedSpot");  //removes class-illegal moves cant be used
         }
-        this.legal_moves_array=[];
+        this.legal_moves_array = [];
         //for player 1 - black moves
         if (index === 0) {
             for (i = 0; i < this.player2.length; i++) {
@@ -67,7 +67,7 @@ function Game() {
                 rowNum = this.player2[i].attr("row")-1;
                 for (var j = -1; j < 2; j++) {    // for rows
                     for (var k = -1; k < 2; k++) {    //for columns
-                        if((rowNum+j)<0 || (rowNum+j)>7 || (colNum+k)<0 || (colNum+k)>7 ){
+                        if((rowNum + j) < 0 || (rowNum + j) > 7 || (colNum + k) < 0 || (colNum + k) > 7){
                             continue;
                         }
                         var selectDiv = array_list[rowNum + j][colNum + k];
@@ -88,10 +88,10 @@ function Game() {
         else { //for player 2 - white moves
             for (var i = 0; i < this.player1.length; i++) {
                 colNum = col_list.indexOf(this.player1[i].attr("col"));
-                rowNum = this.player1[i].attr("row")-1;
+                rowNum = this.player1[i].attr("row") - 1;
                 for (var j = -1; j < 2; j++) {    // for rows
                     for (var k = -1; k < 2; k++) {    //for columns
-                        if((rowNum+j)<0 || (rowNum+j)>7 || (colNum+k)<0 || (colNum+k)>7 ){
+                        if((rowNum + j) < 0 || (rowNum + j) > 7 || (colNum + k) < 0 || (colNum + k) > 7 ){
                             continue;
                         }
                         var selectDiv = array_list[rowNum + j][colNum + k];
@@ -109,12 +109,12 @@ function Game() {
                 }
             }
         }
-        for(var i=0; i<self.legal_moves_array.length; i++){
+        for(var i = 0; i < self.legal_moves_array.length; i++){
             self.legal_moves_array[i].addClass("allowedSpot");
         }
     };
 
-    this.horizontal = function (playerIndex, selectDiv, playerArray, disc_color) {
+    this.horizontal = function (playerIndex, selectDiv, playerArray, disc_color) {  //horizontal function
         if (playerArray[playerIndex].attr("row") === selectDiv.attr("row")) {
             var r = selectDiv.attr("row");
             var c = col_list.indexOf(playerArray[playerIndex].attr("col"));
@@ -127,11 +127,11 @@ function Game() {
                     if (!array_list[selectDiv.attr("row") - 1][c + t].hasClass(disc_color)) {
                         break;
                     }
-                    else if (array_list[r - 1][c + t].hasClass(disc_color) && t === (col_diff-1)) {
+                    else if (array_list[r - 1][c + t].hasClass(disc_color) && t === (col_diff - 1)) {
                         this.legal_moves_array.push(selectDiv);
                         console.log("playerIndex: ",playerIndex);
                         console.log("playerArray: ",playerArray);
-                        console.log("disc_color: ", disc_color)
+                        console.log("disc_color: ", disc_color);
                         console.log("horizontal: " ,selectDiv);
                     }
                 }
@@ -139,7 +139,7 @@ function Game() {
         }
     };
 
-    this.vertical = function (playerIndex, selectDiv, playerArray, disc_color) {
+    this.vertical = function (playerIndex, selectDiv, playerArray, disc_color) {   //vertical function
         if (playerArray[playerIndex].attr("col") === selectDiv.attr("col")) {
             var r = selectDiv.attr("row") - 1;
             var c = col_list.indexOf(selectDiv.attr("col"));
@@ -160,17 +160,17 @@ function Game() {
         }
     };
 
-    this.diagonal = function (playerIndex, selectDiv, playerArray, disc_color, this_color) {
+    this.diagonal = function (playerIndex, selectDiv, playerArray, disc_color, this_color) {   //diagonal function
         var r = selectDiv.attr("row") - 1;
         var c = col_list.indexOf(selectDiv.attr("col"));
         var diag = [[-1,-1],[1,-1],[-1,1],[1,1]];
         var temp_diag_directions = [[-1,-1],[1,-1],[-1,1],[1,1]];
-        for(var i=0; i<diag.length; i++){
+        for(var i = 0; i < diag.length; i++){
             var var1 = diag[i][0];
             var var2 = diag[i][1];
-            var var3 = diag[i][1]+r;
-            var var4 = diag[i][0]+c;
-            if(var3 >= 0 && var3<8 && var4 >=0 && var4 <8){
+            var var3 = diag[i][1] + r;
+            var var4 = diag[i][0] + c;
+            if(var3 >= 0 && var3 < 8 && var4 >= 0 && var4 < 8){
                 var check = array_list[diag[i][1] + r] [diag[i][0] + c];
                 if( typeof check !== undefined && check.hasClass(disc_color)){
                     temp_diag_directions = [[-1,-1],[1,-1],[-1,1],[1,1]];
@@ -179,8 +179,8 @@ function Game() {
                         temp_diag_directions[i][0] += var1;
                         temp_diag_directions[i][1] += var2;
                         var tempr = r + temp_diag_directions[i][1];
-                        var tempc =c + temp_diag_directions[i][0];
-                        if(tempr <0 || tempr >7 || tempc < 0 || tempc >7){
+                        var tempc = c + temp_diag_directions[i][0];
+                        if(tempr < 0 || tempr > 7 || tempc < 0 || tempc > 7){
                             break;
                         }
                         check = array_list[r + temp_diag_directions[i][1]] [c + temp_diag_directions[i][0]];
@@ -194,8 +194,8 @@ function Game() {
         }
     };
 
-    this.clickHandler = function () {
-        //if(this) isn't in the array: dont do this function
+    this.clickHandler = function () {    //click handler function
+        //if(this) isn't in the array: don't do this function
         var bool = false;
         var x = $(this).attr("col");
         var y = $(this).attr("row");
@@ -221,7 +221,7 @@ function Game() {
             if (self.turn == self.player_list[0]) { // player 1's turn
                 $(this).addClass("black-disc");
                 self.player1.push($(this));
-                self.flip($(this), "black-disc", "white-disc",indexofcol, y-1);
+                self.flip($(this), "black-disc", "white-disc",indexofcol, y - 1);
                 self.turn = self.player_list[1];
                 self.legalMoves(1);
             }
@@ -241,15 +241,15 @@ function Game() {
         }
     };
 
-    this.flip = function (inputDiv, color, color_to_replace,x, y) {
+    this.flip = function (inputDiv, color, color_to_replace,x, y) {     //flip function
         var directions = [[-1,-1], [0,-1],[1,-1], [-1,0],[1,0], [-1,1],[0,1], [1,1]];
         var temp_directions = [[-1,-1], [0,-1],[1,-1], [-1,0],[1,0], [-1,1],[0,1], [1,1]];
         var arrayOfFlips = [];
-        for(var j=0; j<directions.length; j++){
+        for(var j = 0; j < directions.length; j++){
             var path = [];
             var temp_y = y + directions[j][1];
             var temp_x = x + directions[j][0];
-            if(temp_y >=0 && temp_y < 8 && temp_x >=0 && temp_x < 8){
+            if(temp_y >= 0 && temp_y < 8 && temp_x >= 0 && temp_x < 8){
                 var divTracker = array_list[temp_y] [temp_x] ;
                 if(divTracker.hasClass(color_to_replace)){
                     temp_directions = directions.slice();
@@ -288,7 +288,7 @@ function Game() {
     var goodImg = $("#jedi-on");
     var badImg = $("#sith-on");
 
-    this.symbolAppear = function(){
+    this.symbolAppear = function(){    //image appears under player function
         var jediImg = $("#player-imageTwo");
         var sithImg = $("#player-imageOne");
         var statsOne = $("#stats_container1");
@@ -315,7 +315,7 @@ function Game() {
         }
     };
 
-    this.gameOver = function(){
+    this.gameOver = function(){     //gameover function
         this.resetAll();
         if(this.player1.length > this.player2.length){
             alert("SITH WINS");
@@ -325,12 +325,12 @@ function Game() {
         }
     };
 
-    this.displayDiscs = function(){
+    this.displayDiscs = function(){    //display function
         $(".player1-value").html(this.player1.length);
         $(".player2-value").html(this.player2.length);
     };
 
-    this.resetAll = function(){
+    this.resetAll = function(){     //reset function
         console.log("reset is being clicked");
         this.turn = null;
     }
