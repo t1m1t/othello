@@ -50,7 +50,10 @@ function Game() {
         this.player2.push(array_list[4][4].addClass('white-disc'));
         this.turn = this.player_list[0];
         this.legalMoves(0);
+        this.displayDiscs();
+        this.symbolAppear();
         $(".rows > div").click(self.clickHandler);
+        $(".reset").click(self.resetAll)
     };
 
     this.legalMoves = function (index) {    //legal moves function
@@ -76,8 +79,6 @@ function Game() {
                         }
                         else {
                             for (var b = 0; b < this.player1.length; b++) {
-                                // this.horizontal(b, selectDiv, this.player1, "white-disc");
-                                // this.vertical(b, selectDiv, this.player1, "white-disc");
                                 this.searchSpots(selectDiv, "white-disc", "black-disc");
                             }
                         }
@@ -155,7 +156,6 @@ function Game() {
     };
 
     this.clickHandler = function () {    //click handler function
-        //if(this) isn't in the array: don't do this function
         var bool = false;
         var x = $(this).attr("col");
         var y = parseInt($(this).attr("row"));
@@ -235,7 +235,6 @@ function Game() {
             arrayOfFlips[i].removeClass("white-disc black-disc");
             arrayOfFlips[i].addClass(color);
         }
-        console.log("arrayOfFlips: ", arrayOfFlips);
     };
 
     var goodImg = $("#jedi-on");
@@ -269,7 +268,6 @@ function Game() {
     };
 
     this.gameOver = function(){     //gameover function
-        this.resetAll();
         if(this.player1.length > this.player2.length){
             alert("SITH WINS");
             this.turn = self.player_list[0];
@@ -280,7 +278,7 @@ function Game() {
             this.turn = self.player_list[1];
             this.symbolAppear();
         }
-
+        this.resetAll();
     };
 
     this.displayDiscs = function(){    //display function
@@ -290,6 +288,15 @@ function Game() {
 
     this.resetAll = function(){     //reset function
         console.log("reset is being clicked");
-        this.turn = null;
+        self.turn = null;
+        for(var i=0; i<8; i++){
+            for(var j=0; j<8; j++){
+                array_list[i][j].removeClass("white-disc black-disc allowedSpot");
+            }
+        }
+        self.player1 = [];
+        self.player2 = [];
+        self.legal_moves_array = [];
+        self.init();
     }
 }
