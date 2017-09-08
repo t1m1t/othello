@@ -2,23 +2,25 @@
     font-family: coolFont;
     src: url(font/coolFont.ttf);
 }
+
 @font-face {
     font-family: badfont;
     src: url(font/badfont.otf);
 }
+
 @font-face {
     font-family: starwarsmain;
     src: url(font/starwarsmain.ttf);
 }
+
 body{
     font-size: 0;
-    width: 1200px;
-    height: 800px;
     margin: 0 auto;
     background-image: url(images/forestbackground.jpg);
     background-size: cover;
     background-repeat: no-repeat;
 }
+
 .game-title,
 .game-subtitle{
     font-family: badFont;
@@ -34,6 +36,7 @@ body{
             -6px -6px white,
             6px 6px 9px white;
 }
+
 .game-subtitle{
     font-family: starwarsmain;
     font-size: 40px;
@@ -45,9 +48,11 @@ body{
             -3px -3px white,
             3px 3px 5px white;
 }
+
 #back-board{
     display: inline-block;
 }
+
 #back-board > div > div{
     background-color: #27660c;
     border: 2px solid black;
@@ -55,9 +60,11 @@ body{
     height: 80px;
     width: 80px;
 }
+
 .game-contents{
     text-align: center;
 }
+
 .stats_container{
     width: 165px;
     height: 250px;
@@ -69,13 +76,16 @@ body{
     margin: 0 20px;
     bottom: 198px;
 }
+
 #stats_container1{
     bottom: 193px;
 }
+
 .player-info{
     font-size: 20px;
     font-weight: bold;
 }
+
 .player_one-name,
 .player_two-name{
     font-family: starwarsmain;
@@ -88,6 +98,7 @@ body{
             -3px -3px white,
             3px 3px 5px white;
 }
+
 .player1-value,
 .player2-value{
     margin: 0 0 20px;
@@ -101,6 +112,7 @@ body{
             -2px -2px white,
             2px 2px 5px white;
 }
+
 #player-imageOne,
 #player-imageTwo {
     width: 150px;
@@ -108,9 +120,11 @@ body{
     border: 3px solid black;
     box-shadow: 0 0 30px 2px whitesmoke;
 }
+
 #reset-button{
     margin-top: 20px;
 }
+
 .reset{
     width: 200px;
     height: 50px;
@@ -121,6 +135,7 @@ body{
     background-color: black;
     display: inline;
 }
+
 .reset:hover {
     background-color: ghostwhite;
     color: black;
@@ -131,21 +146,25 @@ body{
             -1px -1px white,
             1px 1px 5px white;
 }
+
 .white-disc{
     background-image: url(images/jedi1.png);
     background-size: contain;
     background-repeat: no-repeat;
 }
+
 .black-disc{
     background-image: url(images/Sith_Logo.png);
     background-size: cover;
     background-repeat: no-repeat;
 }
+
 #jedi-on,
 #sith-on {
     width: 125px;
     height: auto;
 }
+
 .hiddenClass {
     display: none;
 }
@@ -155,6 +174,7 @@ body{
     background-size: contain;
     background-repeat: no-repeat;
 }
+
 .allowedSpot:hover{
     background-image: url("images/vader_dodge.gif");
     background-size: cover;
@@ -174,6 +194,7 @@ body{
     overflow: auto; /* Enable scroll if needed */
     /* Black w/ opacity */
 }
+
 .modal-content {
     background-color: #fefefe;
     margin: auto;
@@ -185,6 +206,7 @@ body{
     background-size:cover;
     background-repeat:no-repeat;
 }
+
 .modal2 {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -196,6 +218,7 @@ body{
     overflow: auto; /* Enable scroll if needed */
     /* Black w/ opacity */
 }
+
 .modal-content2 {
     background-color: #fefefe;
     margin: auto;
@@ -208,12 +231,14 @@ body{
     background-repeat:no-repeat;
     bottom:294px;
 }
+
 .close {
     color: #aaaaaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
+
 .close:hover,
 .close:focus {
     color: #000;
